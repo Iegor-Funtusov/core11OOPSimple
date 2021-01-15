@@ -11,24 +11,24 @@ public class UserService {
     private final CrudContainer<User> container = ApplicationConfig.getInstance().getContainer();
 
     @HasRole("ADMIN")
-    List<User> findAll() {
+    public List<User> findAll() {
         return container.findAll();
     }
 
     @HasRole("ADMIN, CLIENT")
-    User findById(int id) {
+    public User findById(int id) {
         return container.findById(id);
     }
 
-    void create(User user) {
+    public void create(User user) {
         container.create(user);
     }
 
-    void update(User user) {
+    public void update(User user) {
         container.update(user);
     }
 
-    void delete(int id) {
+    public void delete(int id) {
         container.delete(id);
     }
 }

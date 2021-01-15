@@ -3,13 +3,16 @@ package ua.com.alevel.core;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ApplicationConfig {
 
     private static ApplicationConfig instance;
     private final Reflections reflections;
-    private Set<Class<? extends CrudContainer>> containers;
+    private final Set<Class<? extends CrudContainer>> containers;
+    private final Map<Class<? extends Container>, Object> containersMap = new ConcurrentHashMap<>();
 
     private ApplicationConfig() {
         reflections = new Reflections("ua.com.alevel.core");
@@ -24,20 +27,25 @@ public class ApplicationConfig {
     }
 
     public <AE extends AbstractEntity> CrudContainer<AE> getContainer() {
-        Class<AE> implClass = null;
-        for (Class<?> aClass : containers) {
-            if (!aClass.isAnnotationPresent(Deprecated.class)) {
-                implClass = (Class<AE>) aClass;
+        try {
+            Object instance = containersMap.get(CrudContainer.class);
+            if (instance != null) {
+                return (CrudContainer<AE>) instance;
             }
-        }
-        if (implClass == null) {
+            Class<?> implClass = null;
+            for (Class<?> aClass : containers) {
+                if (!aClass.isAnnotationPresent(Deprecated.class)) {
+                    implClass = aClass;
+                }
+            }
+            if (implClass == null) {
+                throw new RuntimeException("implementation is not present");
+            }
+            instance = implClass.getDeclaredConstructor().newInstance();
+            containersMap.put(CrudContainer.class, instance);
+            return (CrudContainer<AE>) instance;
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException("implementation is not present");
         }
-        try {
-            return (CrudContainer<AE>) implClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
