@@ -13,10 +13,9 @@
     <artifactId>library</artifactId>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <commons.collections.version>3.2.2</commons.collections.version>
-        <lombok.version>1.18.16</lombok.version>
+        <commons.beanutils.version>1.9.4</commons.beanutils.version>
+        <commons.lang3.version>3.11</commons.lang3.version>
         <reflections.version>0.9.12</reflections.version>
     </properties>
 
@@ -34,14 +33,13 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.11</version>
+            <version>${commons.lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.4</version>
+            <version>${commons.beanutils.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
