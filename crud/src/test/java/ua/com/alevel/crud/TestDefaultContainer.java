@@ -8,11 +8,11 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import ua.com.alevel.core.ApplicationConfig;
 import ua.com.alevel.core.CrudContainer;
-import ua.com.alevel.crud.entity.Role;
 import ua.com.alevel.crud.entity.User;
-import ua.com.alevel.crud.service.UserService;
 
 import java.util.List;
+
+import static ua.com.alevel.crud.TestUtil.getAdminUser;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestDefaultContainer {
@@ -27,26 +27,18 @@ public class TestDefaultContainer {
         defaultContainer.create(user);
         List<User> users = defaultContainer.findAll();
         System.out.println("users = " + users);
-        Assert.assertEquals(users.size(), 1);
+        Assert.assertEquals(users.size(), 2);
     }
 
     @Test
     @Order(2)
     public void update() {
         List<User> users = defaultContainer.findAll();
-        Assert.assertEquals(users.size(), 1);
+        Assert.assertEquals(users.size(), 2);
         User user = users.get(0);
         user.setLogin(LOGIN);
         defaultContainer.update(user);
         user = defaultContainer.findById(1);
         Assert.assertEquals(user.getLogin(), LOGIN);
-    }
-
-    private User getAdminUser() {
-        User user = new User();
-        user.setLogin("admin");
-        user.setPassword("nimda");
-        user.setRole(Role.ADMIN);
-        return user;
     }
 }

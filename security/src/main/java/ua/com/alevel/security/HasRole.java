@@ -1,4 +1,4 @@
-package ua.com.alevel.crud.service;
+package ua.com.alevel.security;
 
 import java.lang.annotation.*;
 

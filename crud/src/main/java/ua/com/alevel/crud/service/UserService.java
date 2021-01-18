@@ -4,6 +4,8 @@ import ua.com.alevel.core.ApplicationConfig;
 import ua.com.alevel.core.CrudContainer;
 import ua.com.alevel.crud.entity.User;
 
+import ua.com.alevel.security.HasRole;
+
 import java.util.List;
 
 public class UserService {
@@ -15,7 +17,7 @@ public class UserService {
         return container.findAll();
     }
 
-    @HasRole("ADMIN, CLIENT")
+    @HasRole("ADMIN,CLIENT")
     public User findById(int id) {
         return container.findById(id);
     }

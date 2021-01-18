@@ -2,17 +2,22 @@ package ua.com.alevel.crud.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import ua.com.alevel.core.AbstractEntity;
+
+import ua.com.alevel.core.SecurityUser;
+
+import java.util.Collections;
 
 @Getter
 @Setter
-public class User extends AbstractEntity {
+public class User extends SecurityUser {
 
-    private String login;
-    private String password;
     private Role role;
 
     public User() {
         super();
+    }
+
+    public User(Role role) {
+        setRoleGroup(Collections.singletonList(role.name()));
     }
 }

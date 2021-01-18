@@ -1,0 +1,9 @@
+<aspectj>
+  <aspects>
+    <aspect name="ua.com.alevel.security.HasRoleAspect"/>
+  </aspects>
+  <weaver options="-verbose -showWeaveInfo">
+    <!-- weave anything -->
+    <include within="*"/>
+  </weaver>
+</aspectj>
